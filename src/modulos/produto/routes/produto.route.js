@@ -10,7 +10,7 @@ router.get('/:id', ProdutoController.buscarPorId);
 
 // Protegidas
 router.post('/', autenticar, autorizar(['admin']),ProdutoController.criar);
-router.put('/:id', autenticar, autorizar(['admin']),ProdutoController.atualizar);
+router.put('/:id', autenticar, autorizar(['admin', 'funcionario']),ProdutoController.atualizar); // só admin e funcionário podem atualizar
 router.delete('/:id', autenticar, autorizar(['admin']), ProdutoController.excluir); // só admin pode excluir
 
 module.exports = router;
