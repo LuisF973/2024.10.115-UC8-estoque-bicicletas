@@ -16,10 +16,10 @@ app.use(express.json());
 
 // ROTAS COM PREFIXO '/api'
 app.use('/api/usuarios', usuarioRoutes);       // Ex: /api/usuarios
-app.use('/api/login', authRoutes);             // Ex: /api/login
-app.use('/api/usuarios/me', usuarioRoutes);          // Ex: /api/me (rota protegida, verifique autenticação)
+app.use('/api', authRoutes);             // Ex: /api/login
+// app.use('/api/usuarios/me', usuarioRoutes);          // Ex: /api/me (rota protegida, verifique autenticação)
 app.use('/api/categorias', categoriaRoutes);   // Ex: /api/categorias
-app.use('/api/estoque', produtoRoutes);        // Ex: /api/estoque
+app.use('/api/produtos', produtoRoutes);        // Ex: /api/produtos
 
 
 

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
+
 const jwtSecret = process.env.JWT_SECRET;
 
 class UsuarioController {
@@ -15,7 +16,7 @@ class UsuarioController {
       const novoUsuario = await Usuario.create({ nome, email, senha, role });
       return res.status(201).json({ mensagem: 'Usuário cadastrado com sucesso!' });
     } catch (error) {
-      return res.status(500).json({ erro: error.message });
+      return res.status(500).json({ erro:'erro interno no servidor', detalhes: error.message });
     }
   }
 
@@ -42,15 +43,21 @@ class UsuarioController {
 
   static async perfil(req, res) {
     try {
-      const usuario = await Usuario.findByPk(req.usuarioId, {
+      const usuario = await Usuario.findByPk(req.usuario.id, {
         attributes: ['id', 'nome', 'email', 'role']
       });
-      if (!usuario) return res.status(404).json({ erro: 'Usuário não encontrado.' });
+  
+      if (!usuario) {
+        return res.status(404).json({ erro: 'Usuário não encontrado.' });
+      }
+  
       return res.status(200).json(usuario);
+  
     } catch (error) {
-      return res.status(500).json({ erro: error.message });
+      return res.status(500).json({ erro: 'Erro interno no servidor.', detalhes: error.message });
     }
   }
+  
 }
 
 module.exports = UsuarioController;

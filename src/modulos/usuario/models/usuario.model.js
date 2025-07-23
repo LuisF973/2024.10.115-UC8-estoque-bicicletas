@@ -3,28 +3,41 @@ const { sequelize } = require('../../../config/configDB');
 const bcrypt = require('bcrypt');
 
 const Usuario = sequelize.define('Usuario', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  
   nome: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: { msg: 'O nome é obrigatório.' }
+    }
   },
   email: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
+    unique: true,
     validate: {
-      isEmail: true
+      isEmail: true,
+      notEmpty: { msg: 'O email é obrigatório.' }
     }
   },
   senha: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      len: [6, 100] // Senha deve ter entre 6 e 100 caracteres
+      len: {
+        args: [8],
+        msg: 'A senha deve ter pelo menos 8 caracteres.'
+      }
     }
   },
   role: {
-    type: DataTypes.STRING,
-    defaultValue: 'funcionario'
+    type: DataTypes.ENUM('admin', 'user'),
+    allowNull: false
   }
 },
 {

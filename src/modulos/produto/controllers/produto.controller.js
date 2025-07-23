@@ -25,9 +25,9 @@ class ProdutoController {
 
   static async criar(req, res) {
     try {
-      const { produto_nome, marca, quantidade, preco_unitario, categoriaId } = req.body;
+      const { produto_nome, marca, quantidade, preco_unitario,} = req.body;
 
-      const categoria = await Categoria.findByPk(categoriaId);
+      const categoria = await Categoria.findByPk();
       if (!categoria) return res.status(400).json({ erro: 'Categoria inválida' });
 
       const produto = await Produto.create({

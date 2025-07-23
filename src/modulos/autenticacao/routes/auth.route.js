@@ -1,12 +1,12 @@
 const express = require('express');
-const router = express.Router();
-const AuthController = require('../controllers/auth.controller');
-const autenticar = require('../../../middleware/autenticacao.middleware');
+const router = express.Router()
+const AutenticacaoController = require('../controllers/auth.controller');
+// rota publica de login
+router.post('/login', AutenticacaoController.login);
 
-// POST /api/login  → realiza o login e retorna JWT
-router.post('/', AuthController.login);
+// rota para sair 
+router.post('/logout', AutenticacaoController.sair);
 
-// GET /api/login/verificar  → retorna dados do token se for válido
-router.get('/verificar', autenticar, AuthController.verificar);
-
-module.exports = router;
+// rota usada pelo navegador para atualizar o token 
+router.post('/refresh-token', AutenticacaoController.refreshToken);
+module.exports = router

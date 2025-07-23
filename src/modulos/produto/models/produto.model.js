@@ -3,6 +3,11 @@ const { sequelize } = require('../../../config/configDB');
 const Categoria = require('../../categoria/models/categoria.models');
 
 const Produto = sequelize.define('Produto', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
   produto_nome: {
     type: DataTypes.STRING,
     allowNull: false

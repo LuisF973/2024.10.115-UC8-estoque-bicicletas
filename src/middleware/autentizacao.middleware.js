@@ -1,12 +1,15 @@
-module.exports = function (...rolesPermitidos) {
-    return (req, res, next) => {
-      if (!rolesPermitidos.includes(req.usuarioRole)) {
-        return res.status(403).json({ erro: 'Acesso não autorizado' });
-      }
-      next();
-    };
-  };
-// Esse middleware verifica se o usuário tem uma das roles permitidas  
+class AutorizacaoMiddleware {
+    
+  static autorizar(papeisPermitidos) {
+    return (requisicao, resposta, proximo) => {
+      const usuario = requisicao.usuario;
 
-//Exemplo: autorizacao('admin') só deixa admins continuar
-//Exemplo: autorizacao('admin', 'funcionario') deixa ambos
+      if (!usuario || !papeisPermitidos.includes(usuario.role)) {
+        return resposta.status(403).json({ msg: "Acesso não autorizado para este recurso!" });
+      }
+      proximo();
+    };
+  }
+}
+
+module.exports = AutorizacaoMiddleware;
