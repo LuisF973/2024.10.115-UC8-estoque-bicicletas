@@ -12,6 +12,7 @@ const authRoutes = require('./src/modulos/autenticacao/routes/auth.route');
 
 
 app.use(express.json());
+const port = process.env.PORT || 3000;
 
 
 // ROTAS COM PREFIXO '/api'
@@ -23,20 +24,18 @@ app.use('/api/produtos', produtoRoutes);        // Ex: /api/produtos
 
 
 
-// Rota padrão
-app.get('/', (req, res) => {
-  res.send('🚴 API Loja de Bicicletas rodando!');
+app.listen(port, async () => {
+  try {
+      await sequelize.authenticate();
+      console.log('Conexão com o banco de dados estabelecida com sucesso.');
+
+  } catch (error) {
+      console.error('Não foi possível conectar ao banco de dados:', error);
+  }
+  console.log(`Servidor rodando na porta ${port}`);
 });
 
-// Conexão com o banco e inicialização
-sequelize.sync({ alter: true }).then(() => {
-  console.log('📦 Banco sincronizado com sucesso!');
-  app.listen(3001, () => {
-    console.log('🚀 Servidor rodando em http://localhost:3001');
-  });
-}).catch((error) => {
-  console.error('❌ Erro ao conectar ao banco de dados:', error);
-});
+
 
 
 

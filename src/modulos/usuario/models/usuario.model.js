@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const Usuario = sequelize.define('Usuario', {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     primaryKey: true,
     autoIncrement: true
   },
@@ -36,12 +36,12 @@ const Usuario = sequelize.define('Usuario', {
     }
   },
   role: {
-    type: DataTypes.ENUM('admin', 'user'),
+    type: DataTypes.ENUM('admin', 'funcionario'),
     allowNull: false
   }
 },
 {
-  tableName: "usuarios",
+  tableName: "usuario",
   createdAt: "criado_em",
   updatedAt: "atualizado_em",
 }

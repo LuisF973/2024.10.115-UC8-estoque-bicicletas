@@ -1,19 +1,28 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../../../config/configDB');
 const Categoria = require('../../categoria/models/categoria.models');
+const Usuario = require('../../usuario/models/usuario.model');
 
-const Produto = sequelize.define('Produto', {
+const Produto = sequelize.define('Produtos', {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     primaryKey: true,
-    autoIncrement: true
+    defaultValue: DataTypes.UUIDV4
+  },
+  usuarioId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'usuarios',
+      key: 'id'
+    }
   },
   produto_nome: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(100),
     allowNull: false
   },
   marca: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(100),
     allowNull: false
   },
   quantidade: {
@@ -30,13 +39,11 @@ const Produto = sequelize.define('Produto', {
       min: 0
     }
   }
-
-  
-},
-{
+}, {
   tableName: "produtos",
   createdAt: "criado_em",
   updatedAt: "atualizado_em",
 });
+
 
 module.exports = Produto;
